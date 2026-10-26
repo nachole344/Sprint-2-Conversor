@@ -1,0 +1,194 @@
+1. Conversor de unidades
+Longitud
+Conversión	Factor
+Kilómetros → metros	× 1.000
+Metros → kilómetros	÷ 1.000
+Metros → centímetros	× 100
+Centímetros → metros	÷ 100
+Metros → milímetros	× 1.000
+Metros → millas	÷ 1.609,344
+Millas → metros	× 1.609,344
+Kilómetros → millas	÷ 1,609344
+Millas → kilómetros	× 1,609344
+Pulgadas → centímetros	× 2,54
+Pies → metros	× 0,3048
+
+Peso y masa
+Conversión	Factor
+Kilogramos → gramos	× 1.000
+Gramos → kilogramos	÷ 1.000
+Kilogramos → libras	× 2,20462
+Libras → kilogramos	× 0,453592
+Gramos → miligramos	× 1.000
+Toneladas → kilogramos	× 1.000
+Onzas → gramos	× 28,3495
+
+Temperatura
+Conversión	Fórmula
+Celsius → Fahrenheit	(°C × 9/5) + 32
+Fahrenheit → Celsius	(°F − 32) × 5/9
+Celsius → Kelvin	°C + 273,15
+Kelvin → Celsius	K − 273,15
+Fahrenheit → Kelvin	(°F − 32) × 5/9 + 273,15
+Kelvin → Fahrenheit	(K − 273,15) × 9/5 + 32
+
+Velocidad
+Conversión	Factor
+km/h → m/s	÷ 3,6
+m/s → km/h	× 3,6
+km/h → mph	÷ 1,609344
+mph → km/h	× 1,609344
+m/s → mph	× 2,23694
+mph → m/s	× 0,44704
+
+Volumen
+Conversión	Factor
+Litros → mililitros	× 1.000
+Mililitros → litros	÷ 1.000
+Litros → metros cúbicos	÷ 1.000
+Metros cúbicos → litros	× 1.000
+Litros → galones estadounidenses	× 0,264172
+Galones estadounidenses → litros	× 3,78541
+
+2. Conversor de monedas
+Los tipos de cambio varían, por lo que estos valores se deben consultar mediante una API o introducir como tasas configurables.
+Conversión	Fórmula
+Euros → dólares	euros × tasa EUR/USD
+Dólares → euros	dólares ÷ tasa EUR/USD
+Euros → libras esterlinas	euros × tasa EUR/GBP
+Libras → euros	libras ÷ tasa EUR/GBP
+Euros → yenes japoneses	euros × tasa EUR/JPY
+Yenes → euros	yenes ÷ tasa EUR/JPY
+Euros → francos suizos	euros × tasa EUR/CHF
+Euros → pesos mexicanos	euros × tasa EUR/MXN
+
+Funciones adicionales:
+- Historial de conversiones.
+- Fecha y hora de cada conversión.
+- Selección de moneda de origen y destino.
+- Consulta de tipos de cambio actualizados.
+3. Conversor para programadores
+En estas conversiones se trabaja con bases numéricas y codificaciones.
+Conversión	Ejemplo
+Decimal → binario	10 → 1010
+Binario → decimal	1010 → 10
+Decimal → octal	10 → 12
+Octal → decimal	12 → 10
+Decimal → hexadecimal	255 → FF
+Hexadecimal → decimal	FF → 255
+Binario → hexadecimal	11111111 → FF
+Hexadecimal → binario	A → 1010
+Binario → octal	1010 → 12
+Octal → binario	12 → 1010
+Base 2 → base 36	Conversión entre bases
+Base N → base M	Conversión entre bases del 2 al 36
+Texto → ASCII	A → 65
+ASCII → texto	65 → A
+Texto → hexadecimal	Hola → 486F6C61
+Hexadecimal → texto	486F6C61 → Hola
+
+4. Conversor de horas y fechas
+Tiempo
+Conversión	Factor
+Segundos → minutos	÷ 60
+Minutos → segundos	× 60
+Minutos → horas	÷ 60
+Horas → minutos	× 60
+Horas → segundos	× 3.600
+Días → horas	× 24
+Horas → días	÷ 24
+Días → semanas	÷ 7
+Semanas → días	× 7
+Días → segundos	× 86.400
+Milisegundos → segundos	÷ 1.000
+Microsegundos → segundos	÷ 1.000.000
+
+Nota: los meses no tienen una duración fija. Para convertir meses a días, debes definir un promedio o utilizar fechas reales.
+Fechas y zonas horarias
+Conversión	Método
+Unix timestamp → fecha	Interpretar segundos desde el 1/1/1970 UTC
+Fecha → Unix timestamp	Calcular segundos desde el 1/1/1970 UTC
+Hora UTC → hora local	Aplicar el desfase horario correspondiente
+Hora entre ciudades	Aplicar zona horaria y horario de verano
+Diferencia entre fechas	Calcular la diferencia en segundos, minutos, horas o días
+
+5. Conversor de energía
+Conversión	Factor
+Kilojulios → julios	× 1.000
+Julios → kilojulios	÷ 1.000
+Kilocalorías → calorías	× 1.000
+Calorías → kilocalorías	÷ 1.000
+Kilocalorías → julios	× 4.184
+Julios → kilocalorías	÷ 4.184
+kWh → Wh	× 1.000
+Wh → kWh	÷ 1.000
+kWh → julios	× 3.600.000
+Julios → kWh	÷ 3.600.000
+Wh → julios	× 3.600
+
+Aquí se considera que una caloría equivale a una caloría pequeña y una kilocaloría equivale a 1.000 calorías.
+6. Conversor de almacenamiento digital
+Conversión	Factor
+Bits → bytes	÷ 8
+Bytes → bits	× 8
+Bytes → KB	÷ 1.000
+KB → bytes	× 1.000
+KB → MB	÷ 1.000
+MB → KB	× 1.000
+MB → GB	÷ 1.000
+GB → MB	× 1.000
+GB → TB	÷ 1.000
+TB → GB	× 1.000
+Bytes → KiB	÷ 1.024
+KiB → bytes	× 1.024
+KiB → MiB	÷ 1.024
+MiB → GiB	÷ 1.024
+GiB → TiB	÷ 1.024
+
+Puedes añadir también un conversor de tamaño de archivos, con selección de unidad de entrada y de salida.
+7. Conversor matemático
+Conversión	Fórmula
+Decimal → porcentaje	× 100
+Porcentaje → decimal	÷ 100
+Fracción → decimal	Numerador ÷ denominador
+Decimal → fracción	Transformar y simplificar
+Fracción → porcentaje	(Numerador ÷ denominador) × 100
+Porcentaje → fracción	Porcentaje / 100 y simplificar
+Número → notación científica	\(a \times 10^n\)
+Grados → radianes	× π/180
+Radianes → grados	× 180/π
+Número → cuadrado	\(n^2\)
+Número → raíz cuadrada	\(\sqrt{n}\)
+
+
+
+
+
+
+
+
+
+basicaas
+
+longitud nacho
+
+peso / masa nuria
+
+tiempo (horas fechas)  nacho
+
+volumen (litros) nuria
+
+almacenamiento nacho
+
+matematico nuria
+
+
+
+no tan basicoss
+velocidad
+euros
+energias
+volumenes (l/m3)
+
+avanzados
+programacion
