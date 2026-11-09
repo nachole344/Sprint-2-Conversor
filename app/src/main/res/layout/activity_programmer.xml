@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,23 +27,25 @@
             <TextView
                 android:id="@+id/btnBackProgrammer"
                 android:layout_width="wrap_content"
-                android:layout_height="42dp"
+                android:layout_height="48dp"
                 android:gravity="center_vertical"
-                android:paddingEnd="14dp"
+                android:paddingEnd="16dp"
                 android:text="‹   VOLVER"
                 android:textColor="#60A5FA"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.08"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:contentDescription="Volver a la pantalla anterior"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
 
             <!-- CABECERA -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -66,7 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Conversor de bases y codificacion"
+                    android:text="Conversor de bases y codificación"
                     android:textColor="#94A3B8"
                     android:textSize="14sp"/>
 
@@ -98,7 +101,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="CONVERSION"
+                        android:text="CONVERSIÓN"
                         android:textColor="#F8FAFC"
                         android:textSize="13sp"
                         android:textStyle="bold"
@@ -122,7 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="TIPO DE CONVERSION"
+                    android:text="TIPO DE CONVERSIÓN"
                     android:textColor="#94A3B8"
                     android:textSize="10sp"
                     android:textStyle="bold"
@@ -136,7 +139,8 @@
                     android:background="@drawable/bg_input"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
-                    android:spinnerMode="dropdown"/>
+                    android:spinnerMode="dropdown"
+                    android:contentDescription="Seleccionar tipo de conversión"/>
 
                 <!-- BASES PERSONALIZADAS -->
                 <LinearLayout
@@ -147,6 +151,7 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
+                    <!-- BASE ORIGEN -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -169,10 +174,12 @@
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_input"
                             android:paddingStart="8dp"
-                            android:paddingEnd="8dp"/>
+                            android:paddingEnd="8dp"
+                            android:contentDescription="Seleccionar base de origen"/>
 
                     </LinearLayout>
 
+                    <!-- BASE DESTINO -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -195,7 +202,8 @@
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_input"
                             android:paddingStart="8dp"
-                            android:paddingEnd="8dp"/>
+                            android:paddingEnd="8dp"
+                            android:contentDescription="Seleccionar base de destino"/>
 
                     </LinearLayout>
 
@@ -225,29 +233,30 @@
                     android:layout_height="110dp"
                     android:layout_marginTop="9dp"
                     android:background="@drawable/bg_input"
-                    android:hint="Introduce un numero o texto..."
+                    android:hint="Introduce un número o texto..."
                     android:textColor="#F8FAFC"
                     android:textColorHint="#64748B"
                     android:textSize="15sp"
                     android:padding="15dp"
                     android:gravity="top|start"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textNoSuggestions"
                     android:minLines="2"
                     android:maxLines="4"
-                    android:scrollbars="vertical"/>
+                    android:scrollbars="vertical"
+                    android:importantForAutofill="no"/>
 
                 <!-- BOTON -->
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnProgrammerConvert"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
-                    android:backgroundTint="@null"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_button"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/bg_button_blue"
                     android:text="CONVERTIR   →"
                     android:textColor="#080D18"
-                    android:textStyle="bold"
                     android:textSize="13sp"
+                    android:textStyle="bold"
                     android:letterSpacing="0.06"
                     android:stateListAnimator="@null"/>
 
@@ -288,12 +297,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="El resultado aparecera aqui"
+                        android:text="El resultado aparecerá aquí"
                         android:textColor="#60A5FA"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textIsSelectable="true"
-                        android:breakStrategy="simple"/>
+                        android:breakStrategy="simple"
+                        android:paddingBottom="4dp"/>
 
                 </LinearLayout>
 

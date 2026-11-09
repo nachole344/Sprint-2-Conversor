@@ -1,16 +1,19 @@
+
 package com.example.sprint2conversor;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.graphics.Color;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,17 +30,30 @@ import java.util.Locale;
 
 public class ConverterActivity extends AppCompatActivity {
 
-
-    // variables de conversor
-
-
-    private EditText etValorOrigen, etValorResultado;
-    private Spinner spUnidadOrigen, spUnidadDestino;
-    private TextView tvResultado, tvTitulo, tvSubtitulo;
+    // =====================================================
+    // VARIABLES GENERALES
+    // =====================================================
 
     private String categoriaActual;
 
-    private String[] unidadesMonedas = {
+    // Conversor normal
+    private EditText etValorOrigen;
+    private EditText etValorResultado;
+
+    private Spinner spUnidadOrigen;
+    private Spinner spUnidadDestino;
+
+    private TextView tvResultado;
+    private TextView tvTitulo;
+    private TextView tvSubtitulo;
+
+    private Button btnConvert;
+
+    // =====================================================
+    // UNIDADES DE CONVERSION
+    // =====================================================
+
+    private final String[] unidadesMonedas = {
             "Euro (EUR)",
             "Dólar (USD)",
             "Peso chileno (CLP)",
@@ -50,33 +66,50 @@ public class ConverterActivity extends AppCompatActivity {
             "Franco (FRANCO)",
             "Social Credit (SOCIAL)"
     };
-    private String[] unidadesMasa = {
+
+    private final String[] unidadesMasa = {
             "kg", "g", "mg", "lb", "oz", "t"
     };
 
-    private String[] unidadesVolumen = {
+    private final String[] unidadesVolumen = {
             "L", "mL", "m³", "gal US"
     };
 
-    // variables mates
+    // =====================================================
+    // VARIABLES MATEMATICAS
+    // =====================================================
 
-
-    private EditText etNumeradorFraccion1, etDenominadorFraccion1;
-    private EditText etNumeradorFraccion2, etDenominadorFraccion2;
-
-    private EditText etPorcentaje, etValorPorcentaje;
-    private EditText etNumeroRaiz;
-    private EditText etBasePotencia, etExponentePotencia;
-    private EditText etAngulo;
+    // Fracciones
+    private EditText etNumeradorFraccion1;
+    private EditText etDenominadorFraccion1;
+    private EditText etNumeradorFraccion2;
+    private EditText etDenominadorFraccion2;
 
     private Spinner spOperacionFraccion;
-    private Spinner spDireccionAngulo;
-
     private TextView tvResultadoFraccion;
+
+    // Porcentajes
+    private EditText etPorcentaje;
+    private EditText etValorPorcentaje;
     private TextView tvResultadoPorcentaje;
+
+    // Raices
+    private EditText etNumeroRaiz;
     private TextView tvResultadoRaiz;
+
+    // Potencias
+    private EditText etBasePotencia;
+    private EditText etExponentePotencia;
     private TextView tvResultadoPotencia;
+
+    // Angulos
+    private EditText etAngulo;
+    private Spinner spDireccionAngulo;
     private TextView tvResultadoAngulo;
+
+    // =====================================================
+    // CICLO DE VIDA
+    // =====================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,47 +117,71 @@ public class ConverterActivity extends AppCompatActivity {
 
         categoriaActual = getIntent().getStringExtra("category");
 
-        if (categoriaActual == null) {
+        if (categoriaActual == null || categoriaActual.trim().isEmpty()) {
             categoriaActual = "Peso";
         }
 
-        // PANTALLA MATEMATICAS
-        if (categoriaActual.equalsIgnoreCase("Matematicas")
-                || categoriaActual.equalsIgnoreCase("Matemáticas")) {
+        // Seleccionamos la pantalla correspondiente.
+        if (isMathCategory()) {
 
             setContentView(R.layout.activity_math);
             configureMathScreen();
-            return;
-        }
 
-        // PANTALLA PROGRAMACION
-        if (categoriaActual.equalsIgnoreCase("Programacion")
-                || categoriaActual.equalsIgnoreCase("Programación")) {
+        } else if (isProgrammerCategory()) {
 
             setContentView(R.layout.activity_programmer);
             configureProgrammerScreen();
-            return;
+
+        } else {
+
+            setContentView(R.layout.activity_converter);
+            initializeConverterViews();
+            configureCategory();
         }
-
-        // CONVERSOR NORMAL
-        setContentView(R.layout.activity_converter);
-
-        initializeConverterViews();
-        configureCategory();
     }
+
+    // =====================================================
+    // IDENTIFICACION DE CATEGORIAS
+    // =====================================================
+
+    private boolean isMathCategory() {
+        return categoriaActual.equalsIgnoreCase("Matematicas")
+                || categoriaActual.equalsIgnoreCase("Matemáticas");
+    }
+
+    private boolean isProgrammerCategory() {
+        return categoriaActual.equalsIgnoreCase("Programacion")
+                || categoriaActual.equalsIgnoreCase("Programación");
+    }
+
+    // =====================================================
+    // CONVERSOR PARA PROGRAMADORES
+    // =====================================================
 
     private void configureProgrammerScreen() {
 
-        Spinner spProgrammerMode = findViewById(R.id.spProgrammerMode);
+            // BOTON VOLVER
+            TextView btnBack = findViewById(R.id.btnBackProgrammer);
+            btnBack.setOnClickListener(v -> finish());
+
+            // A partir de aquí continúa el código que ya tenías:
+            Spinner spProgrammerMode = findViewById(R.id.spProgrammerMode);
+
         Spinner spBaseFrom = findViewById(R.id.spBaseFrom);
         Spinner spBaseTo = findViewById(R.id.spBaseTo);
 
         EditText etProgrammerValue = findViewById(R.id.etProgrammerValue);
-        Button btnProgrammerConvert = findViewById(R.id.btnProgrammerConvert);
-        TextView tvProgrammerResult = findViewById(R.id.tvProgrammerResult);
-        LinearLayout layoutCustomBases = findViewById(R.id.layoutCustomBases);
 
-        // Modos de conversion
+        Button btnProgrammerConvert =
+                findViewById(R.id.btnProgrammerConvert);
+
+        TextView tvProgrammerResult =
+                findViewById(R.id.tvProgrammerResult);
+
+        LinearLayout layoutCustomBases =
+                findViewById(R.id.layoutCustomBases);
+
+        // Modos disponibles.
         String[] modes = {
                 "Decimal → Binario",
                 "Binario → Decimal",
@@ -147,12 +204,11 @@ public class ConverterActivity extends AppCompatActivity {
                 "HEX → ASCII"
         };
 
-        ArrayAdapter<String> modeAdapter =
-                createProgrammerAdapter(modes);
+        spProgrammerMode.setAdapter(
+                createProgrammerAdapter(modes)
+        );
 
-        spProgrammerMode.setAdapter(modeAdapter);
-
-        // Bases disponibles: 2 hasta 36
+        // Generamos las bases del 2 al 36.
         String[] bases = new String[35];
 
         for (int i = 0; i < bases.length; i++) {
@@ -162,40 +218,42 @@ public class ConverterActivity extends AppCompatActivity {
         spBaseFrom.setAdapter(createProgrammerAdapter(bases));
         spBaseTo.setAdapter(createProgrammerAdapter(bases));
 
+        // Selecciones iniciales.
         spBaseFrom.setSelection(8); // Base 10
         spBaseTo.setSelection(0);   // Base 2
 
-        // Mostrar las bases personalizadas solamente cuando corresponda
+        // Mostramos las bases personalizadas cuando corresponda.
         spProgrammerMode.setOnItemSelectedListener(
-                new android.widget.AdapterView.OnItemSelectedListener() {
+                new AdapterView.OnItemSelectedListener() {
 
                     @Override
                     public void onItemSelected(
-                            android.widget.AdapterView<?> parent,
+                            AdapterView<?> parent,
                             View view,
                             int position,
                             long id) {
 
-                        if (position == 12) {
-                            layoutCustomBases.setVisibility(View.VISIBLE);
-                        } else {
-                            layoutCustomBases.setVisibility(View.GONE);
-                        }
+                        layoutCustomBases.setVisibility(
+                                position == 12 ? View.VISIBLE : View.GONE
+                        );
                     }
 
                     @Override
-                    public void onNothingSelected(
-                            android.widget.AdapterView<?> parent) {
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        layoutCustomBases.setVisibility(View.GONE);
                     }
                 }
         );
 
-        // Boton de conversion
+        // Boton de conversion.
         btnProgrammerConvert.setOnClickListener(v -> {
 
-            String value = etProgrammerValue.getText().toString().trim();
+            String value = etProgrammerValue.getText()
+                    .toString()
+                    .trim();
 
             try {
+
                 String result = calculateProgrammer(
                         spProgrammerMode.getSelectedItemPosition(),
                         value,
@@ -206,14 +264,17 @@ public class ConverterActivity extends AppCompatActivity {
                 tvProgrammerResult.setText(result);
 
             } catch (IllegalArgumentException e) {
+
                 showMessage(e.getMessage());
+
             } catch (Exception e) {
+
                 showMessage("No se ha podido realizar la conversion.");
             }
         });
-
     }
 
+    // Adaptador personalizado para programacion.
     private ArrayAdapter<String> createProgrammerAdapter(String[] options) {
 
         return new ArrayAdapter<String>(
@@ -227,41 +288,46 @@ public class ConverterActivity extends AppCompatActivity {
                 TextView tv = new TextView(ConverterActivity.this);
 
                 tv.setText(text);
-                tv.setTextColor(android.graphics.Color.WHITE);
+                tv.setTextColor(Color.WHITE);
                 tv.setTextSize(14);
                 tv.setPadding(16, 12, 16, 12);
-                tv.setGravity(android.view.Gravity.CENTER_VERTICAL);
+                tv.setGravity(Gravity.CENTER_VERTICAL);
 
                 return tv;
             }
 
             @Override
-            public View getView(int position, View convertView,
-                                android.view.ViewGroup parent) {
+            public View getView(
+                    int position,
+                    View convertView,
+                    ViewGroup parent) {
 
                 return createTextView(getItem(position));
             }
 
             @Override
-            public View getDropDownView(int position, View convertView,
-                                        android.view.ViewGroup parent) {
+            public View getDropDownView(
+                    int position,
+                    View convertView,
+                    ViewGroup parent) {
 
                 TextView tv = createTextView(getItem(position));
-                tv.setBackgroundColor(
-                        android.graphics.Color.parseColor("#141C2B")
-                );
+
+                tv.setBackgroundColor(Color.parseColor("#141C2B"));
 
                 return tv;
             }
         };
     }
+
+    // Ejecuta la conversion seleccionada.
     private String calculateProgrammer(
             int mode,
             String value,
             String baseFrom,
             String baseTo) {
 
-        if (value.isEmpty()) {
+        if (value == null || value.isEmpty()) {
             throw new IllegalArgumentException(
                     "Introduce un valor para convertir."
             );
@@ -340,7 +406,10 @@ public class ConverterActivity extends AppCompatActivity {
                 );
         }
     }
-    // conversor peso y volumen
+
+    // =====================================================
+    // CONVERSOR DE MASA, VOLUMEN Y MONEDAS
+    // =====================================================
 
     private void initializeConverterViews() {
 
@@ -354,7 +423,8 @@ public class ConverterActivity extends AppCompatActivity {
         tvTitulo = findViewById(R.id.tvTitle);
         tvSubtitulo = findViewById(R.id.tvSubtitle);
 
-        Button btnConvert = findViewById(R.id.btnConvert);
+        btnConvert = findViewById(R.id.btnConvert);
+
         Button btnBack = findViewById(R.id.btnBack);
 
         btnConvert.setOnClickListener(v -> calculate());
@@ -362,7 +432,7 @@ public class ConverterActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
     }
 
-
+    // Configura las unidades segun la categoria.
     private void configureCategory() {
 
         String[] options;
@@ -375,7 +445,10 @@ public class ConverterActivity extends AppCompatActivity {
             options = unidadesMasa;
 
             tvTitulo.setText("Conversor de masa");
-            tvSubtitulo.setText("Convierte entre diferentes unidades de masa");
+
+            tvSubtitulo.setText(
+                    "Convierte entre diferentes unidades de masa"
+            );
 
         } else if (categoriaActual.equalsIgnoreCase("Volumen")) {
 
@@ -383,7 +456,10 @@ public class ConverterActivity extends AppCompatActivity {
             options = unidadesVolumen;
 
             tvTitulo.setText("Conversor de volumen");
-            tvSubtitulo.setText("Convierte entre diferentes unidades de volumen");
+
+            tvSubtitulo.setText(
+                    "Convierte entre diferentes unidades de volumen"
+            );
 
         } else if (categoriaActual.equalsIgnoreCase("Monedas")
                 || categoriaActual.equalsIgnoreCase("Moneda")) {
@@ -392,18 +468,24 @@ public class ConverterActivity extends AppCompatActivity {
             options = unidadesMonedas;
 
             tvTitulo.setText("Conversor de monedas");
-            tvSubtitulo.setText("Convierte entre diferentes divisas");
+
+            tvSubtitulo.setText(
+                    "Convierte entre diferentes divisas"
+            );
 
         } else {
 
             tvTitulo.setText("Categoría no disponible");
-            tvSubtitulo.setText("Esta categoría todavía no está implementada");
+
+            tvSubtitulo.setText(
+                    "Esta categoría todavía no está implementada"
+            );
 
             showMessage("Categoría no disponible");
             return;
         }
 
-        // Crear adaptador personalizado
+        // Configuramos los dos Spinner.
         ArrayAdapter<String> adapter = createUnitAdapter(options);
 
         spUnidadOrigen.setAdapter(adapter);
@@ -415,15 +497,19 @@ public class ConverterActivity extends AppCompatActivity {
             spUnidadDestino.setSelection(1);
         }
 
+        // Limpiamos los resultados anteriores.
+        etValorOrigen.setText("");
         etValorResultado.setText("");
+
         tvResultado.setText("Resultado de la conversión");
     }
 
-
-
+    // Realiza la conversion de masa, volumen o monedas.
     private void calculate() {
 
-        String input = etValorOrigen.getText().toString().trim();
+        String input = etValorOrigen.getText()
+                .toString()
+                .trim();
 
         if (input.isEmpty()) {
             showMessage("Introduce un valor primero");
@@ -437,8 +523,7 @@ public class ConverterActivity extends AppCompatActivity {
             );
 
             if (!Double.isFinite(value)) {
-                showMessage("Introduce un número válido");
-                return;
+                throw new NumberFormatException();
             }
 
             if (value < 0) {
@@ -451,28 +536,39 @@ public class ConverterActivity extends AppCompatActivity {
 
             double result;
 
-            if (categoriaActual.equals("Peso y masa")) {
+            // Seleccionamos el conversor correspondiente.
+            switch (categoriaActual) {
 
-                result = MassConverter.convert(value, from, to);
+                case "Peso y masa":
+                    result = MassConverter.convert(value, from, to);
+                    break;
 
-            } else if (categoriaActual.equals("Volumen")) {
+                case "Volumen":
+                    result = VolumeConverter.convert(value, from, to);
+                    break;
 
-                result = VolumeConverter.convert(value, from, to);
+                case "Monedas":
+                    result = MoneyConverter.convert(value, from, to);
+                    break;
 
-            } else if (categoriaActual.equals("Monedas")) {
+                default:
+                    showMessage("Categoría no disponible");
+                    return;
+            }
 
-                result = MoneyConverter.convert(value, from, to);
-
-            } else {
-
-                showMessage("Categoría no disponible");
-                return;
+            if (!Double.isFinite(result)) {
+                throw new IllegalArgumentException(
+                        "El resultado no es válido"
+                );
             }
 
             String formattedResult = formatNumber(result);
 
             etValorResultado.setText(formattedResult);
-            tvResultado.setText(formattedResult + " " + to);
+
+            tvResultado.setText(
+                    formattedResult + " " + to
+            );
 
         } catch (NumberFormatException e) {
 
@@ -480,51 +576,64 @@ public class ConverterActivity extends AppCompatActivity {
 
         } catch (IllegalArgumentException e) {
 
-            showMessage("No se ha podido realizar la conversión");
+            showMessage(
+                    e.getMessage() != null
+                            ? e.getMessage()
+                            : "No se ha podido realizar la conversión"
+            );
         }
     }
 
-
-    // pantalla mates
+    // =====================================================
+    // CONVERSOR MATEMATICO
+    // =====================================================
 
     private void configureMathScreen() {
 
-        // btn volver
+        // Boton volver.
         Button btnBack = findViewById(R.id.btnBackMath);
+
         btnBack.setOnClickListener(v -> finish());
 
-        // campos fracciones
+        // Fracciones.
         etNumeradorFraccion1 = findViewById(R.id.etFractionNum1);
         etDenominadorFraccion1 = findViewById(R.id.etFractionDen1);
+
         etNumeradorFraccion2 = findViewById(R.id.etFractionNum2);
         etDenominadorFraccion2 = findViewById(R.id.etFractionDen2);
 
         spOperacionFraccion = findViewById(R.id.spFractionOperation);
+
         tvResultadoFraccion = findViewById(R.id.tvFractionResult);
 
-        // campos porcentajes
+        // Porcentajes.
         etPorcentaje = findViewById(R.id.etPercentage);
         etValorPorcentaje = findViewById(R.id.etPercentageValue);
+
         tvResultadoPorcentaje = findViewById(R.id.tvPercentageResult);
 
-        // campos raizes
+        // Raices.
         etNumeroRaiz = findViewById(R.id.etRootNumber);
+
         tvResultadoRaiz = findViewById(R.id.tvRootResult);
 
-        // campos potencias
+        // Potencias.
         etBasePotencia = findViewById(R.id.etPowerBase);
         etExponentePotencia = findViewById(R.id.etPowerExponent);
+
         tvResultadoPotencia = findViewById(R.id.tvPowerResult);
 
-        // campos de angulos
+        // Angulos.
         etAngulo = findViewById(R.id.etAngle);
+
         spDireccionAngulo = findViewById(R.id.spAngleDirection);
+
         tvResultadoAngulo = findViewById(R.id.tvAngleResult);
 
-        // configuracion opciones del spinner
+        // Configuramos los Spinner.
         configureMathSpinners();
 
-        // conectar btns
+        // Botones de operaciones.
         Button btnFraction = findViewById(R.id.btnFraction);
         Button btnPercentage = findViewById(R.id.btnPercentage);
         Button btnRoot = findViewById(R.id.btnRoot);
@@ -538,55 +647,7 @@ public class ConverterActivity extends AppCompatActivity {
         btnAngle.setOnClickListener(v -> calculateAngle());
     }
 
-    // crear dapatador personalizado para las unidades
-    private ArrayAdapter<String> createUnitAdapter(String[] options) {
-
-        return new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_spinner_item,
-                options
-        ) {
-
-            // texto cuando spinner esta cerrado
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                TextView textView = new TextView(ConverterActivity.this);
-
-                textView.setText(getItem(position));
-                textView.setTextColor(Color.parseColor("#F1F5F9"));
-                textView.setTextSize(16);
-                textView.setGravity(Gravity.CENTER_VERTICAL);
-                textView.setPadding(14, 0, 14, 0);
-                textView.setTypeface(null, android.graphics.Typeface.BOLD);
-
-                return textView;
-            }
-
-            // aparecen al desplegar
-            @Override
-            public View getDropDownView(
-                    int position,
-                    View convertView,
-                    ViewGroup parent
-            ) {
-
-                TextView textView = new TextView(ConverterActivity.this);
-
-                textView.setText(getItem(position));
-                textView.setTextColor(Color.parseColor("#F1F5F9"));
-                textView.setTextSize(15);
-                textView.setGravity(Gravity.CENTER_VERTICAL);
-                textView.setPadding(18, 0, 18, 0);
-                textView.setMinHeight(52);
-                textView.setBackgroundColor(Color.parseColor("#111B2D"));
-
-                return textView;
-            }
-        };
-    }
-
-    // configurar opciones spinner
+    // Configura las opciones de los Spinner matematicos.
     private void configureMathSpinners() {
 
         String[] fractionOperations = {
@@ -626,7 +687,9 @@ public class ConverterActivity extends AppCompatActivity {
         spDireccionAngulo.setAdapter(angleAdapter);
     }
 
-    // calcular fracciones
+    // =====================================================
+    // OPERACIONES CON FRACCIONES
+    // =====================================================
 
     private void calculateFraction() {
 
@@ -648,20 +711,27 @@ public class ConverterActivity extends AppCompatActivity {
                     getInput(etDenominadorFraccion2)
             );
 
-            String operation =
-                    spOperacionFraccion.getSelectedItem().toString();
+            String operation = spOperacionFraccion
+                    .getSelectedItem()
+                    .toString();
 
             String result = MathConverter.calculateFraction(
-                    num1, den1,
-                    num2, den2,
+                    num1,
+                    den1,
+                    num2,
+                    den2,
                     operation
             );
 
-            tvResultadoFraccion.setText("Resultado: " + result);
+            tvResultadoFraccion.setText(
+                    "Resultado: " + result
+            );
 
         } catch (NumberFormatException e) {
 
-            showMessage("Introduce todos los valores de las fracciones");
+            showMessage(
+                    "Introduce todos los valores de las fracciones"
+            );
 
         } catch (IllegalArgumentException e) {
 
@@ -669,7 +739,9 @@ public class ConverterActivity extends AppCompatActivity {
         }
     }
 
-    // calcular porcentajes
+    // =====================================================
+    // CALCULO DE PORCENTAJES
+    // =====================================================
 
     private void calculatePercentage() {
 
@@ -690,10 +762,16 @@ public class ConverterActivity extends AppCompatActivity {
         } catch (NumberFormatException e) {
 
             showMessage("Introduce el porcentaje y la cantidad");
+
+        } catch (IllegalArgumentException e) {
+
+            showMessage(e.getMessage());
         }
     }
 
-    // calcular raiz cuadrada
+    // =====================================================
+    // CALCULO DE RAICES
+    // =====================================================
 
     private void calculateRoot() {
 
@@ -717,7 +795,9 @@ public class ConverterActivity extends AppCompatActivity {
         }
     }
 
-    // calcular potencias
+    // =====================================================
+    // CALCULO DE POTENCIAS
+    // =====================================================
 
     private void calculatePower() {
 
@@ -745,7 +825,9 @@ public class ConverterActivity extends AppCompatActivity {
         }
     }
 
-    // calcular angulos
+    // =====================================================
+    // CONVERSION DE ANGULOS
+    // =====================================================
 
     private void calculateAngle() {
 
@@ -753,8 +835,9 @@ public class ConverterActivity extends AppCompatActivity {
 
             double angle = parseNumber(etAngulo);
 
-            String direction =
-                    spDireccionAngulo.getSelectedItem().toString();
+            String direction = spDireccionAngulo
+                    .getSelectedItem()
+                    .toString();
 
             double result;
 
@@ -778,15 +861,78 @@ public class ConverterActivity extends AppCompatActivity {
         } catch (NumberFormatException e) {
 
             showMessage("Introduce un ángulo válido");
+
+        } catch (IllegalArgumentException e) {
+
+            showMessage(e.getMessage());
         }
     }
 
-    // metdodos auxiliares
+    // =====================================================
+    // ADAPTADOR PERSONALIZADO PARA UNIDADES
+    // =====================================================
 
-    // obtener el texto de un EditText
+    private ArrayAdapter<String> createUnitAdapter(String[] options) {
+
+        return new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_item,
+                options
+        ) {
+
+            // Texto del Spinner cuando esta cerrado.
+            @Override
+            public View getView(
+                    int position,
+                    View convertView,
+                    ViewGroup parent) {
+
+                TextView textView = new TextView(ConverterActivity.this);
+
+                textView.setText(getItem(position));
+                textView.setTextColor(Color.parseColor("#F1F5F9"));
+                textView.setTextSize(16);
+                textView.setGravity(Gravity.CENTER_VERTICAL);
+                textView.setPadding(14, 0, 14, 0);
+                textView.setTypeface(null, Typeface.BOLD);
+
+                return textView;
+            }
+
+            // Opciones cuando se despliega el Spinner.
+            @Override
+            public View getDropDownView(
+                    int position,
+                    View convertView,
+                    ViewGroup parent) {
+
+                TextView textView = new TextView(ConverterActivity.this);
+
+                textView.setText(getItem(position));
+                textView.setTextColor(Color.parseColor("#F1F5F9"));
+                textView.setTextSize(15);
+                textView.setGravity(Gravity.CENTER_VERTICAL);
+                textView.setPadding(18, 0, 18, 0);
+                textView.setMinHeight(52);
+                textView.setBackgroundColor(
+                        Color.parseColor("#111B2D")
+                );
+
+                return textView;
+            }
+        };
+    }
+
+    // =====================================================
+    // METODOS AUXILIARES
+    // =====================================================
+
+    // Obtiene el contenido de un EditText.
     private String getInput(EditText editText) {
 
-        String value = editText.getText().toString().trim();
+        String value = editText.getText()
+                .toString()
+                .trim();
 
         if (value.isEmpty()) {
             throw new NumberFormatException();
@@ -795,7 +941,8 @@ public class ConverterActivity extends AppCompatActivity {
         return value;
     }
 
-    // convertir texto a numero decimal
+    // Convierte un texto a numero decimal.
+    // Admite tanto punto como coma decimal.
     private double parseNumber(EditText editText) {
 
         String value = getInput(editText).replace(',', '.');
@@ -809,34 +956,43 @@ public class ConverterActivity extends AppCompatActivity {
         return number;
     }
 
-    // resultados con decimales
+    // Formatea los resultados con el formato decimal español.
     private String formatNumber(double number) {
+
+        if (!Double.isFinite(number)) {
+            throw new IllegalArgumentException(
+                    "El resultado no es un numero valido"
+            );
+        }
 
         DecimalFormatSymbols symbols =
                 DecimalFormatSymbols.getInstance(
                         new Locale("es", "ES")
                 );
 
-        DecimalFormat format =
-                new DecimalFormat("#,##0.##########", symbols);
+        DecimalFormat format = new DecimalFormat(
+                "#,##0.##########",
+                symbols
+        );
+
+        format.setGroupingUsed(true);
 
         return format.format(number);
     }
 
-    // enseñaar mensajes Snackbar
+    // =====================================================
+    // MENSAJES SNACKBAR
+    // =====================================================
+
     private void showMessage(String message) {
 
         int rootId;
 
-        if (categoriaActual != null &&
-                (categoriaActual.equalsIgnoreCase("Matematicas")
-                        || categoriaActual.equalsIgnoreCase("Matemáticas"))) {
+        if (isMathCategory()) {
 
             rootId = R.id.rootMath;
 
-        } else if (categoriaActual != null &&
-                (categoriaActual.equalsIgnoreCase("Programacion")
-                        || categoriaActual.equalsIgnoreCase("Programación"))) {
+        } else if (isProgrammerCategory()) {
 
             rootId = R.id.rootProgrammer;
 
@@ -845,8 +1001,19 @@ public class ConverterActivity extends AppCompatActivity {
             rootId = R.id.rootConverter;
         }
 
+        View rootView = findViewById(rootId);
+
+        // Evitamos errores si no se encuentra el contenedor.
+        if (rootView == null) {
+            rootView = findViewById(android.R.id.content);
+        }
+
+        if (message == null || message.trim().isEmpty()) {
+            message = "Ha ocurrido un error";
+        }
+
         Snackbar.make(
-                findViewById(rootId),
+                rootView,
                 message,
                 Snackbar.LENGTH_SHORT
         ).show();

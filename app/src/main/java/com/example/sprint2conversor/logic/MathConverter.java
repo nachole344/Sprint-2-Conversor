@@ -1,93 +1,123 @@
 package com.example.sprint2conversor.logic;
 
+import java.math.BigInteger;
 
 public class MathConverter {
-    // operaciones de fracciones
+
+    // Operaciones con fracciones
+    // Se usa BigInteger para evitar desbordamientos con números grandes
     public static String calculateFraction(int num1, int den1, int num2, int den2, String operacion) {
+
         if (den1 == 0 || den2 == 0) {
-            throw new IllegalArgumentException("el denominador no puede ser 0");
+            throw new IllegalArgumentException("El denominador no puede ser 0");
         }
-        int numerador;
-        int denominador;
+
+        if (operacion == null) {
+            throw new IllegalArgumentException("Operación no válida");
+        }
+
+        BigInteger n1 = BigInteger.valueOf(num1);
+        BigInteger d1 = BigInteger.valueOf(den1);
+        BigInteger n2 = BigInteger.valueOf(num2);
+        BigInteger d2 = BigInteger.valueOf(den2);
+
+        BigInteger numerador;
+        BigInteger denominador;
 
         switch (operacion) {
             case "Sumar":
-                numerador = num1 * den2 + num2 * den1;
-                denominador = den1 * den2;
+                numerador = n1.multiply(d2).add(n2.multiply(d1));
+                denominador = d1.multiply(d2);
                 break;
 
             case "Restar":
-                numerador = num1 * den2 - num2 * den1;
-                denominador = den1 * den2;
+                numerador = n1.multiply(d2).subtract(n2.multiply(d1));
+                denominador = d1.multiply(d2);
                 break;
 
             case "Multiplicar":
-                numerador = num1 * num2;
-                denominador = den1 * den2;
+                numerador = n1.multiply(n2);
+                denominador = d1.multiply(d2);
                 break;
 
             case "Dividir":
-                if (num2 == 0) {
-                    throw new IllegalArgumentException("no se puede dividir entre una fraccion igual a 0");
+                if (n2.signum() == 0) {
+                    throw new IllegalArgumentException(
+                            "No se puede dividir entre una fracción igual a 0"
+                    );
                 }
-                numerador = num1 * den2;
-                denominador = den1 * num2;
+                numerador = n1.multiply(d2);
+                denominador = d1.multiply(n2);
                 break;
+
             default:
-                throw new IllegalArgumentException("operacion no valida");
+                throw new IllegalArgumentException("Operación no válida");
         }
 
-        if (denominador < 0) {
-            numerador = -numerador;
-            denominador = -denominador;
+        // El signo siempre va en el numerador
+        if (denominador.signum() < 0) {
+            numerador = numerador.negate();
+            denominador = denominador.negate();
         }
-        int divisor = mcd(Math.abs(numerador), Math.abs(denominador));
 
-        numerador /= divisor;
-        denominador /= divisor;
+        // Simplificar la fracción (el denominador nunca es 0, así que el mcd es >= 1)
+        BigInteger divisor = numerador.gcd(denominador);
+
+        numerador = numerador.divide(divisor);
+        denominador = denominador.divide(divisor);
+
+        // Si el denominador es 1, el resultado es un número entero
+        if (denominador.equals(BigInteger.ONE)) {
+            return numerador.toString();
+        }
 
         return numerador + " / " + denominador;
     }
 
-    // maximo comun divisor
-    private static int mcd(int a, int b) {
-        while (b != 0) {
-            int resto = a % b;
-            a = b;
-            b = resto;
-        }
-        return a == 0 ? 1 : a;
-    }
-
-    //porcentaje
+    // Porcentaje
     public static double calcularPorcentaje(double porcentaje, double value) {
-        return (porcentaje / 100) * value;
-    }
+        double resultado = (porcentaje / 100) * value;
 
-    //raiz cuadradaa
-    public static double calcularRaizCuadrada(double num) {
-        if (num < 0) {
-            throw new IllegalArgumentException("no existe raiz real de un numero negativo");
-        }
-        return Math.sqrt(num);
-    }
-
-    // potencia
-    public static double calcularPotencia(double base, double exponente) {
-        double resultado = Math.pow(base, exponente);
-
-        if (Double.isNaN(resultado) || Double.isInfinite(resultado)) {
-            throw new IllegalArgumentException("el resultado no es valido");
+        if (!Double.isFinite(resultado)) {
+            throw new IllegalArgumentException("El resultado no es válido");
         }
         return resultado;
     }
 
-    // grados a radianes
+    // Raíz cuadrada
+    public static double calcularRaizCuadrada(double num) {
+        if (num < 0) {
+            throw new IllegalArgumentException(
+                    "No existe la raíz real de un número negativo"
+            );
+        }
+        return Math.sqrt(num);
+    }
+
+    // Potencia
+    public static double calcularPotencia(double base, double exponente) {
+        double resultado = Math.pow(base, exponente);
+
+        if (Double.isNaN(resultado)) {
+            throw new IllegalArgumentException(
+                    "El resultado no es un número real"
+            );
+        }
+
+        if (Double.isInfinite(resultado)) {
+            throw new IllegalArgumentException(
+                    "El resultado es demasiado grande o no está definido"
+            );
+        }
+        return resultado;
+    }
+
+    // Grados a radianes
     public static double gradosARadianes(double grados) {
         return Math.toRadians(grados);
     }
 
-    // radianes a grados
+    // Radianes a grados
     public static double radianesAGrados(double radianes) {
         return Math.toDegrees(radianes);
     }
