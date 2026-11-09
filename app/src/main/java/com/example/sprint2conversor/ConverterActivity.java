@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import com.example.sprint2conversor.logic.MassConverter;
 import com.example.sprint2conversor.logic.VolumeConverter;
 import com.example.sprint2conversor.logic.MathConverter;
 import com.example.sprint2conversor.logic.MoneyConverter;
+import com.example.sprint2conversor.logic.ProgrammerConverter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
@@ -80,14 +82,13 @@ public class ConverterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // obten la categoria del mainactivity
         categoriaActual = getIntent().getStringExtra("category");
 
         if (categoriaActual == null) {
             categoriaActual = "Peso";
         }
 
-        // si la categoria es mates
+        // PANTALLA MATEMATICAS
         if (categoriaActual.equalsIgnoreCase("Matematicas")
                 || categoriaActual.equalsIgnoreCase("Matemáticas")) {
 
@@ -96,13 +97,249 @@ public class ConverterActivity extends AppCompatActivity {
             return;
         }
 
-        // si la categoria NO es mates
+        // PANTALLA PROGRAMACION
+        if (categoriaActual.equalsIgnoreCase("Programacion")
+                || categoriaActual.equalsIgnoreCase("Programación")) {
+
+            setContentView(R.layout.activity_programmer);
+            configureProgrammerScreen();
+            return;
+        }
+
+        // CONVERSOR NORMAL
         setContentView(R.layout.activity_converter);
 
         initializeConverterViews();
         configureCategory();
     }
 
+    private void configureProgrammerScreen() {
+
+        Spinner spProgrammerMode = findViewById(R.id.spProgrammerMode);
+        Spinner spBaseFrom = findViewById(R.id.spBaseFrom);
+        Spinner spBaseTo = findViewById(R.id.spBaseTo);
+
+        EditText etProgrammerValue = findViewById(R.id.etProgrammerValue);
+        Button btnProgrammerConvert = findViewById(R.id.btnProgrammerConvert);
+        TextView tvProgrammerResult = findViewById(R.id.tvProgrammerResult);
+        LinearLayout layoutCustomBases = findViewById(R.id.layoutCustomBases);
+
+        // Modos de conversion
+        String[] modes = {
+                "Decimal → Binario",
+                "Binario → Decimal",
+                "Decimal → Octal",
+                "Octal → Decimal",
+                "Decimal → Hexadecimal",
+                "Hexadecimal → Decimal",
+                "Binario → Octal",
+                "Octal → Binario",
+                "Binario → Hexadecimal",
+                "Hexadecimal → Binario",
+                "Octal → Hexadecimal",
+                "Hexadecimal → Octal",
+                "Base personalizada",
+                "Texto → ASCII",
+                "ASCII → Texto",
+                "Texto → HEX",
+                "HEX → Texto",
+                "ASCII → HEX",
+                "HEX → ASCII"
+        };
+
+        ArrayAdapter<String> modeAdapter =
+                createProgrammerAdapter(modes);
+
+        spProgrammerMode.setAdapter(modeAdapter);
+
+        // Bases disponibles: 2 hasta 36
+        String[] bases = new String[35];
+
+        for (int i = 0; i < bases.length; i++) {
+            bases[i] = String.valueOf(i + 2);
+        }
+
+        spBaseFrom.setAdapter(createProgrammerAdapter(bases));
+        spBaseTo.setAdapter(createProgrammerAdapter(bases));
+
+        spBaseFrom.setSelection(8); // Base 10
+        spBaseTo.setSelection(0);   // Base 2
+
+        // Mostrar las bases personalizadas solamente cuando corresponda
+        spProgrammerMode.setOnItemSelectedListener(
+                new android.widget.AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(
+                            android.widget.AdapterView<?> parent,
+                            View view,
+                            int position,
+                            long id) {
+
+                        if (position == 12) {
+                            layoutCustomBases.setVisibility(View.VISIBLE);
+                        } else {
+                            layoutCustomBases.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(
+                            android.widget.AdapterView<?> parent) {
+                    }
+                }
+        );
+
+        // Boton de conversion
+        btnProgrammerConvert.setOnClickListener(v -> {
+
+            String value = etProgrammerValue.getText().toString().trim();
+
+            try {
+                String result = calculateProgrammer(
+                        spProgrammerMode.getSelectedItemPosition(),
+                        value,
+                        spBaseFrom.getSelectedItem().toString(),
+                        spBaseTo.getSelectedItem().toString()
+                );
+
+                tvProgrammerResult.setText(result);
+
+            } catch (IllegalArgumentException e) {
+                showMessage(e.getMessage());
+            } catch (Exception e) {
+                showMessage("No se ha podido realizar la conversion.");
+            }
+        });
+
+    }
+
+    private ArrayAdapter<String> createProgrammerAdapter(String[] options) {
+
+        return new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_item,
+                options
+        ) {
+
+            private TextView createTextView(String text) {
+
+                TextView tv = new TextView(ConverterActivity.this);
+
+                tv.setText(text);
+                tv.setTextColor(android.graphics.Color.WHITE);
+                tv.setTextSize(14);
+                tv.setPadding(16, 12, 16, 12);
+                tv.setGravity(android.view.Gravity.CENTER_VERTICAL);
+
+                return tv;
+            }
+
+            @Override
+            public View getView(int position, View convertView,
+                                android.view.ViewGroup parent) {
+
+                return createTextView(getItem(position));
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        android.view.ViewGroup parent) {
+
+                TextView tv = createTextView(getItem(position));
+                tv.setBackgroundColor(
+                        android.graphics.Color.parseColor("#141C2B")
+                );
+
+                return tv;
+            }
+        };
+    }
+    private String calculateProgrammer(
+            int mode,
+            String value,
+            String baseFrom,
+            String baseTo) {
+
+        if (value.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Introduce un valor para convertir."
+            );
+        }
+
+        switch (mode) {
+
+            case 0:
+                return ProgrammerConverter.convertBase(value, 10, 2);
+
+            case 1:
+                return ProgrammerConverter.convertBase(value, 2, 10);
+
+            case 2:
+                return ProgrammerConverter.convertBase(value, 10, 8);
+
+            case 3:
+                return ProgrammerConverter.convertBase(value, 8, 10);
+
+            case 4:
+                return ProgrammerConverter.convertBase(value, 10, 16);
+
+            case 5:
+                return ProgrammerConverter.convertBase(value, 16, 10);
+
+            case 6:
+                return ProgrammerConverter.convertBase(value, 2, 8);
+
+            case 7:
+                return ProgrammerConverter.convertBase(value, 8, 2);
+
+            case 8:
+                return ProgrammerConverter.convertBase(value, 2, 16);
+
+            case 9:
+                return ProgrammerConverter.convertBase(value, 16, 2);
+
+            case 10:
+                return ProgrammerConverter.convertBase(value, 8, 16);
+
+            case 11:
+                return ProgrammerConverter.convertBase(value, 16, 8);
+
+            case 12:
+                return ProgrammerConverter.convertBase(
+                        value,
+                        Integer.parseInt(baseFrom),
+                        Integer.parseInt(baseTo)
+                );
+
+            case 13:
+                return ProgrammerConverter.textToAscii(value);
+
+            case 14:
+                return ProgrammerConverter.asciiToText(value);
+
+            case 15:
+                return ProgrammerConverter.textToHex(value);
+
+            case 16:
+                return ProgrammerConverter.hexToText(value);
+
+            case 17:
+                return ProgrammerConverter.textToHex(
+                        ProgrammerConverter.asciiToText(value)
+                );
+
+            case 18:
+                return ProgrammerConverter.textToAscii(
+                        ProgrammerConverter.hexToText(value)
+                );
+
+            default:
+                throw new IllegalArgumentException(
+                        "Selecciona un tipo de conversion."
+                );
+        }
+    }
     // conversor peso y volumen
 
     private void initializeConverterViews() {
@@ -591,11 +828,17 @@ public class ConverterActivity extends AppCompatActivity {
 
         int rootId;
 
-        if (categoriaActual != null
-                && (categoriaActual.equalsIgnoreCase("Matematicas")
-                || categoriaActual.equalsIgnoreCase("Matemáticas"))) {
+        if (categoriaActual != null &&
+                (categoriaActual.equalsIgnoreCase("Matematicas")
+                        || categoriaActual.equalsIgnoreCase("Matemáticas"))) {
 
             rootId = R.id.rootMath;
+
+        } else if (categoriaActual != null &&
+                (categoriaActual.equalsIgnoreCase("Programacion")
+                        || categoriaActual.equalsIgnoreCase("Programación"))) {
+
+            rootId = R.id.rootProgrammer;
 
         } else {
 

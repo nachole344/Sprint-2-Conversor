@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         View catVolume = findViewById(R.id.catVolume);
         View catMath = findViewById(R.id.catMath);
         View catCurrency = findViewById(R.id.catCurrency);
+        View catProgrammer = findViewById(R.id.catProgrammer);
 
         catCurrency.setOnClickListener(v -> openConverter("Monedas"));
 
@@ -50,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         catLength.setContentDescription(
                 "Longitud. Conversor próximamente disponible"
         );
+
+        catProgrammer.setOnClickListener(v -> {
+            openConverter("Programacion");
+        });
 
         catWeight.setContentDescription(
                 "Peso. Abrir conversor de masa"
