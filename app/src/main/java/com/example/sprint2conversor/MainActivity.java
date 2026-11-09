@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         View catSpeed = findViewById(R.id.catSpeed);
         View catVolume = findViewById(R.id.catVolume);
         View catMath = findViewById(R.id.catMath);
+        View catCurrency = findViewById(R.id.catCurrency);
+
+        catCurrency.setOnClickListener(v -> openConverter("Monedas"));
 
         // Descripciones para accesibilidad
         catLength.setContentDescription(
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         catWeight.setContentDescription(
                 "Peso. Abrir conversor de masa"
         );
+
 
         catTemperature.setContentDescription(
                 "Temperatura. Conversor próximamente disponible"
