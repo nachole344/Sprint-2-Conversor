@@ -17,6 +17,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.sprint2conversor.logic.*;
 
+import java.util.Arrays;
+
 public class ConversorPrueba extends AppCompatActivity {
 
     // Elementos de la vista
@@ -30,14 +32,16 @@ public class ConversorPrueba extends AppCompatActivity {
     private Conversor conversor = new Conversor();
 
     // Arrays y adaptadores
-    private String[] longitudes = {"Milimetros","Centimetros", "Decimetros","Metros", "Kilometros", "Pies", "Pulgadas", "Yardas", "Millas"};
-    private String[] tiempos = {"Segundos", "Minutos", "Horas", "Dias", "Semanas", "Meses", "Años"};
-    private String[] almacenamiento = {"Bit", "Byte", "Kilobyte", "Megabyte", "Gigabyte", "Terabyte"};
-    private String[] velocidad = {"m/s", "Km/h", "ft/s", "mph", "Match", "kn", "Luz"};
+    private String[] longitudes = Arrays.stream(lengthUnits.values()).map(lengthUnits::getAbreviacion).toArray(String[]::new);
+    private String[] tiempos = Arrays.stream(timeUnits.values()).map(timeUnits::getAbreviacion).toArray(String[]::new);
+    private String[] almacenamiento = Arrays.stream(storageUnits.values()).map(storageUnits::getAbreviacion).toArray(String[]::new);
+    private String[] velocidad = Arrays.stream(speedUnits.values()).map(speedUnits::getAbreviacion).toArray(String[]::new);
+    private String[] energia = Arrays.stream(energyUnits.values()).map(energyUnits::getAbreviacion).toArray(String[]::new);
     private ArrayAdapter<String> adapterLongitud;
     private ArrayAdapter<String> adapterTiempo;
     private ArrayAdapter<String> adapterAlmacenamiento;
     private ArrayAdapter<String> adapterVelocidad;
+    private ArrayAdapter<String> adapterEnergia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +62,9 @@ public class ConversorPrueba extends AppCompatActivity {
         adapterTiempo = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tiempos);
         adapterAlmacenamiento = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, almacenamiento);
         adapterVelocidad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, velocidad);
+        adapterEnergia = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, energia);
 
-        String[] conversiones = {"Longitud", "Tiempo", "Almacenamiento", "Velocidad"};
+        String[] conversiones = {"Longitud", "Tiempo", "Almacenamiento", "Velocidad", "Energia"};
 
 
         ArrayAdapter<String> adapterConversion = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, conversiones);
@@ -109,6 +114,10 @@ public class ConversorPrueba extends AppCompatActivity {
                 listaUnidadesOrigen.setAdapter(adapterVelocidad);
                 listaUnidadesDestino.setAdapter(adapterVelocidad);
                 break;
+            case "Energia":
+                listaUnidadesOrigen.setAdapter(adapterEnergia);
+                listaUnidadesDestino.setAdapter(adapterEnergia);
+                break;
             default:
                 break;
         }
@@ -130,6 +139,9 @@ public class ConversorPrueba extends AppCompatActivity {
             case "Velocidad":
                 convertirVelocidad();
                 break;
+            case "Energia":
+                convertirEnergia();
+                break;
             default:
                 break;
         }
@@ -137,13 +149,20 @@ public class ConversorPrueba extends AppCompatActivity {
     }
 
     public void convertirLongitud() {
-        lengthUnits origen = lengthUnits.valueOf(listaUnidadesOrigen.getSelectedItem().toString().toUpperCase());
-        lengthUnits destino = lengthUnits.valueOf(listaUnidadesDestino.getSelectedItem().toString().toUpperCase());
-        double valor = Double.parseDouble(introValor.getText().toString());
+        String origenStr = listaUnidadesOrigen.getSelectedItem().toString();
+        String destinoStr = listaUnidadesDestino.getSelectedItem().toString();
 
         try {
+            // Convertir a enum
+            lengthUnits origen = lengthUnits.getUnit(origenStr);
+            lengthUnits destino = lengthUnits.getUnit(destinoStr);
+            double valor = Double.parseDouble(introValor.getText().toString());
+
+            // Realizar la conversion
             double resultado = conversor.convertirLongitud(valor, origen, destino);
             resultadoConversion.setText(String.valueOf(resultado));
+
+        // Manejar excepciones
         } catch (IllegalArgumentException e) {
             resultadoConversion.setText("Error: " + e.getMessage());
         }
@@ -151,13 +170,20 @@ public class ConversorPrueba extends AppCompatActivity {
     }
 
     public void convertirTiempo() {
-        timeUnits origen = timeUnits.valueOf(listaUnidadesOrigen.getSelectedItem().toString().toUpperCase());
-        timeUnits destino = timeUnits.valueOf(listaUnidadesDestino.getSelectedItem().toString().toUpperCase());
-        double valor = Double.parseDouble(introValor.getText().toString());
+        String origenStr = listaUnidadesOrigen.getSelectedItem().toString();
+        String destinoStr = listaUnidadesDestino.getSelectedItem().toString();
 
         try {
+            // Convertir a enum
+            timeUnits origen = timeUnits.getUnit(origenStr);
+            timeUnits destino = timeUnits.getUnit(destinoStr);
+            double valor = Double.parseDouble(introValor.getText().toString());
+
+            // Realizar la conversion
             double resultado = conversor.convertirTiempo(valor, origen, destino);
             resultadoConversion.setText(String.valueOf(resultado));
+
+            // Manejar excepciones
         } catch (IllegalArgumentException e) {
             resultadoConversion.setText("Error: " + e.getMessage());
         }
@@ -165,13 +191,20 @@ public class ConversorPrueba extends AppCompatActivity {
     }
 
     public void convertirAlmacenamiento() {
-        storageUnits origen = storageUnits.valueOf(listaUnidadesOrigen.getSelectedItem().toString().toUpperCase());
-        storageUnits destino = storageUnits.valueOf(listaUnidadesDestino.getSelectedItem().toString().toUpperCase());
-        double valor = Double.parseDouble(introValor.getText().toString());
+        String origenStr = listaUnidadesOrigen.getSelectedItem().toString();
+        String destinoStr = listaUnidadesDestino.getSelectedItem().toString();
 
         try {
+            // Convertir a enum
+            storageUnits origen = storageUnits.getUnit(origenStr);
+            storageUnits destino = storageUnits.getUnit(destinoStr);
+            double valor = Double.parseDouble(introValor.getText().toString());
+
+            // Realizar la conversion
             double resultado = conversor.convertirAlmacenamiento(valor, origen, destino);
             resultadoConversion.setText(String.valueOf(resultado));
+
+            // Manejar excepciones
         } catch (IllegalArgumentException e) {
             resultadoConversion.setText("Error: " + e.getMessage());
         }
@@ -179,69 +212,39 @@ public class ConversorPrueba extends AppCompatActivity {
     }
 
     public void convertirVelocidad() {
-        // Aqui no se puede usar el mismo metodo que el resto al tener un nombre diferente al de la clase Enum
-        String origen = listaUnidadesOrigen.getSelectedItem().toString();
-        switch (origen){
-            case "m/s":
-                origen = "METROS_POR_SEGUNDO";
-                break;
-            case "Km/h":
-                origen = "KILOMETROS_POR_HORA";
-                break;
-            case "ft/s":
-                origen = "PIE_POR_SEGUNDO";
-                break;
-            case "mph":
-                origen = "MILLAS_POR_HORA";
-                break;
-            case "Match":
-                origen = "MATCH";
-                break;
-            case "kn":
-                origen = "NUDO";
-                break;
-            case "Luz":
-                origen = "C";
-                break;
-            default:
-                break;
-
-        }
-        String destino = listaUnidadesDestino.getSelectedItem().toString();
-        switch (destino){
-            case "m/s":
-                destino = "METROS_POR_SEGUNDO";
-                break;
-            case "Km/h":
-                destino = "KILOMETROS_POR_HORA";
-                break;
-            case "ft/s":
-                destino = "PIE_POR_SEGUNDO";
-                break;
-            case "mph":
-                destino = "MILLAS_POR_HORA";
-                break;
-            case "Match":
-                destino = "MATCH";
-                break;
-            case "kn":
-                destino = "NUDO";
-                break;
-            case "Luz":
-                destino = "C";
-                break;
-            default:
-                break;
-
-        }
-
-        speedUnits origenEnum = speedUnits.valueOf(origen);
-        speedUnits destinoEnum = speedUnits.valueOf(destino);
-        double valor = Double.parseDouble(introValor.getText().toString());
+        String origenStr = listaUnidadesOrigen.getSelectedItem().toString();
+        String destinoStr = listaUnidadesDestino.getSelectedItem().toString();
 
         try {
-            double resultado = conversor.convertirVelocidad(valor, origenEnum, destinoEnum);
+            // Convertir a enum
+            speedUnits origen = speedUnits.getUnit(origenStr);
+            speedUnits destino = speedUnits.getUnit(destinoStr);
+            double valor = Double.parseDouble(introValor.getText().toString());
+
+            // Realizar la conversion
+            double resultado = conversor.convertirVelocidad(valor, origen, destino);
             resultadoConversion.setText(String.valueOf(resultado));
+
+            // Manejar excepciones
+        } catch (IllegalArgumentException e) {
+            resultadoConversion.setText("Error: " + e.getMessage());
+        }
+    }
+    private void convertirEnergia() {
+        String origenStr = listaUnidadesOrigen.getSelectedItem().toString();
+        String destinoStr = listaUnidadesDestino.getSelectedItem().toString();
+
+        try {
+            // Convertir a enum
+            energyUnits origen = energyUnits.getUnit(origenStr);
+            energyUnits destino = energyUnits.getUnit(destinoStr);
+            double valor = Double.parseDouble(introValor.getText().toString());
+
+            // Realizar la conversion
+            double resultado = conversor.convertirEnergia(valor, origen, destino);
+            resultadoConversion.setText(String.valueOf(resultado));
+
+            // Manejar excepciones
         } catch (IllegalArgumentException e) {
             resultadoConversion.setText("Error: " + e.getMessage());
         }
