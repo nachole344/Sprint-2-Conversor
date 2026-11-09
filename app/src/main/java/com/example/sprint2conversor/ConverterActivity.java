@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sprint2conversor.logic.MassConverter;
 import com.example.sprint2conversor.logic.VolumeConverter;
 import com.example.sprint2conversor.logic.MathConverter;
+import com.example.sprint2conversor.logic.MoneyConverter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
@@ -34,6 +35,19 @@ public class ConverterActivity extends AppCompatActivity {
 
     private String categoriaActual;
 
+    private String[] unidadesMonedas = {
+            "Euro (EUR)",
+            "Dólar (USD)",
+            "Peso chileno (CLP)",
+            "Peso argentino (ARS)",
+            "Won surcoreano (KRW)",
+            "Yen japonés (JPY)",
+            "Peso mexicano (MXN)",
+            "Libra esterlina (GBP)",
+            "Yuan chino (CNY)",
+            "Franco (FRANCO)",
+            "Social Credit (SOCIAL)"
+    };
     private String[] unidadesMasa = {
             "kg", "g", "mg", "lb", "oz", "t"
     };
@@ -111,6 +125,7 @@ public class ConverterActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
     }
 
+
     private void configureCategory() {
 
         String[] options;
@@ -133,6 +148,15 @@ public class ConverterActivity extends AppCompatActivity {
             tvTitulo.setText("Conversor de volumen");
             tvSubtitulo.setText("Convierte entre diferentes unidades de volumen");
 
+        } else if (categoriaActual.equalsIgnoreCase("Monedas")
+                || categoriaActual.equalsIgnoreCase("Moneda")) {
+
+            categoriaActual = "Monedas";
+            options = unidadesMonedas;
+
+            tvTitulo.setText("Conversor de monedas");
+            tvSubtitulo.setText("Convierte entre diferentes divisas");
+
         } else {
 
             tvTitulo.setText("Categoría no disponible");
@@ -142,10 +166,9 @@ public class ConverterActivity extends AppCompatActivity {
             return;
         }
 
-        // crear adaptador personalizado
+        // Crear adaptador personalizado
         ArrayAdapter<String> adapter = createUnitAdapter(options);
 
-        // aplica las unidades del adaptador
         spUnidadOrigen.setAdapter(adapter);
         spUnidadDestino.setAdapter(adapter);
 
@@ -158,6 +181,8 @@ public class ConverterActivity extends AppCompatActivity {
         etValorResultado.setText("");
         tvResultado.setText("Resultado de la conversión");
     }
+
+
 
     private void calculate() {
 
@@ -179,6 +204,11 @@ public class ConverterActivity extends AppCompatActivity {
                 return;
             }
 
+            if (value < 0) {
+                showMessage("Introduce un valor positivo");
+                return;
+            }
+
             String from = spUnidadOrigen.getSelectedItem().toString();
             String to = spUnidadDestino.getSelectedItem().toString();
 
@@ -191,6 +221,10 @@ public class ConverterActivity extends AppCompatActivity {
             } else if (categoriaActual.equals("Volumen")) {
 
                 result = VolumeConverter.convert(value, from, to);
+
+            } else if (categoriaActual.equals("Monedas")) {
+
+                result = MoneyConverter.convert(value, from, to);
 
             } else {
 
@@ -212,6 +246,7 @@ public class ConverterActivity extends AppCompatActivity {
             showMessage("No se ha podido realizar la conversión");
         }
     }
+
 
     // pantalla mates
 
