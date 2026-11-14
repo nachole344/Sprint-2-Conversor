@@ -66,8 +66,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_input"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:text="TOOLS"
                 android:textColor="#60A5FA"
                 android:textSize="10sp"
@@ -102,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="9dp"
-                    android:text="TU CENTRO DE CONVERSION"
+                    android:text="TU CENTRO DE CONVERSIÓN"
                     android:textColor="#60A5FA"
                     android:textSize="10sp"
                     android:textStyle="bold"
@@ -129,11 +131,42 @@
                 android:textSize="13sp"
                 android:lineSpacingExtra="4dp"/>
 
+            <!-- VISTA PREVIA DE LA CATEGORIA (se carga como Bitmap desde MainActivity) -->
+
+            <ImageView
+                android:id="@+id/ivCategoryPreview"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/bg_input"
+                android:clipToOutline="true"
+                android:contentDescription="Vista previa de la categoría seleccionada"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/tvSelectedCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Ninguna categoría seleccionada"
+                android:textColor="#F1F5F9"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvSelectedHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Toca una tarjeta de abajo para elegir"
+                android:textColor="#94A3B8"
+                android:textSize="12sp"/>
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnStart"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/bg_button"
                 android:backgroundTint="@null"
                 android:stateListAnimator="@null"
@@ -174,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Selecciona una categoria"
+                    android:text="Selecciona una categoría"
                     android:textColor="#64748B"
                     android:textSize="12sp"/>
 
@@ -183,7 +216,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="07 TOOLS"
+                android:text="12 TOOLS"
                 android:textColor="#60A5FA"
                 android:textSize="10sp"
                 android:textStyle="bold"
@@ -456,7 +489,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
-                    android:text="Matematicas"
+                    android:text="Matemáticas"
                     android:textColor="#F1F5F9"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
@@ -479,7 +512,7 @@
                 android:layout_width="0dp"
                 android:layout_height="145dp"
                 android:layout_columnWeight="1"
-                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
                 android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_card"
                 android:clickable="true"
@@ -517,7 +550,7 @@
 
             </LinearLayout>
 
-            <!-- Programacion -->
+            <!-- PROGRAMACION -->
 
             <LinearLayout
                 android:id="@+id/catProgrammer"
@@ -557,6 +590,186 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Bases y ASCII"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <!-- TIEMPO -->
+
+            <LinearLayout
+                android:id="@+id/catTime"
+                android:layout_width="0dp"
+                android:layout_height="145dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="7dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="17dp">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center"
+                    android:text="◔"
+                    android:textColor="#60A5FA"
+                    android:textSize="26sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:text="Tiempo"
+                    android:textColor="#F1F5F9"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Horas y minutos"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <!-- DATOS -->
+
+            <LinearLayout
+                android:id="@+id/catDigital"
+                android:layout_width="0dp"
+                android:layout_height="145dp"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="7dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="17dp">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center"
+                    android:text="01"
+                    android:textColor="#60A5FA"
+                    android:textSize="22sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:text="Datos"
+                    android:textColor="#F1F5F9"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Bytes y bits"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <!-- ÁREA -->
+
+            <LinearLayout
+                android:id="@+id/catArea"
+                android:layout_width="0dp"
+                android:layout_height="145dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="7dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="17dp">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center"
+                    android:text="▦"
+                    android:textColor="#60A5FA"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:text="Área"
+                    android:textColor="#F1F5F9"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Superficies"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <!-- PRESIÓN -->
+
+            <LinearLayout
+                android:id="@+id/catPressure"
+                android:layout_width="0dp"
+                android:layout_height="145dp"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="7dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="17dp">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center"
+                    android:text="⊙"
+                    android:textColor="#60A5FA"
+                    android:textSize="26sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:text="Presión"
+                    android:textColor="#F1F5F9"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Bar y pascales"
                     android:textColor="#64748B"
                     android:textSize="12sp"/>
 

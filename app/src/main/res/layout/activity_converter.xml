@@ -102,6 +102,8 @@
                     android:background="@drawable/bg_input"
                     android:hint="Introduce un valor"
                     android:inputType="numberDecimal|numberSigned"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:textColor="#F1F5F9"
@@ -276,6 +278,7 @@
 
                 <TextView
                     android:id="@+id/tvResult"
+                    android:textIsSelectable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
@@ -286,6 +289,19 @@
                     android:gravity="center" />
 
             </LinearLayout>
+
+            <!-- NOTA (solo visible en algunas categorías, p. ej. monedas) -->
+
+            <TextView
+                android:id="@+id/tvNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:lineSpacingExtra="2dp"
+                android:textColor="#64748B"
+                android:textSize="11sp"
+                android:visibility="gone"/>
 
             <!-- PIE -->
 

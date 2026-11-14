@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:clipToPadding="false"
-        android:scrollbars="vertical">
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,28 +23,29 @@
             android:paddingBottom="30dp">
 
             <!-- NAVEGACION -->
-            <TextView
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnBackProgrammer"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
-                android:paddingEnd="16dp"
-                android:text="‹   VOLVER"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_input"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:text="←  Volver"
+                android:textAllCaps="false"
                 android:textColor="#60A5FA"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.08"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="Volver a la pantalla anterior"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp" />
 
             <!-- CABECERA -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="24dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Programmer"
+                    android:text="Programación"
                     android:textColor="#F8FAFC"
                     android:textSize="32sp"
                     android:textStyle="bold"/>
@@ -110,8 +110,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="5dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:text="DEV TOOLS"
                         android:textColor="#60A5FA"
                         android:textSize="9sp"
@@ -133,14 +135,14 @@
 
                 <Spinner
                     android:id="@+id/spProgrammerMode"
+                    android:popupBackground="#111B2D"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_marginTop="9dp"
                     android:background="@drawable/bg_input"
                     android:paddingStart="13dp"
                     android:paddingEnd="13dp"
-                    android:spinnerMode="dropdown"
-                    android:contentDescription="Seleccionar tipo de conversión"/>
+                    android:spinnerMode="dropdown"/>
 
                 <!-- BASES PERSONALIZADAS -->
                 <LinearLayout
@@ -151,7 +153,6 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <!-- BASE ORIGEN -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -163,23 +164,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="BASE ORIGEN"
+                            android:letterSpacing="0.08"
                             android:textColor="#94A3B8"
                             android:textSize="10sp"
                             android:textStyle="bold"/>
 
                         <Spinner
                             android:id="@+id/spBaseFrom"
+                            android:popupBackground="#111B2D"
+                            android:spinnerMode="dropdown"
                             android:layout_width="match_parent"
                             android:layout_height="52dp"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_input"
                             android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:contentDescription="Seleccionar base de origen"/>
+                            android:paddingEnd="8dp"/>
 
                     </LinearLayout>
 
-                    <!-- BASE DESTINO -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -191,19 +193,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="BASE DESTINO"
+                            android:letterSpacing="0.08"
                             android:textColor="#94A3B8"
                             android:textSize="10sp"
                             android:textStyle="bold"/>
 
                         <Spinner
                             android:id="@+id/spBaseTo"
+                            android:popupBackground="#111B2D"
+                            android:spinnerMode="dropdown"
                             android:layout_width="match_parent"
                             android:layout_height="52dp"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_input"
                             android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:contentDescription="Seleccionar base de destino"/>
+                            android:paddingEnd="8dp"/>
 
                     </LinearLayout>
 
@@ -229,6 +233,8 @@
 
                 <EditText
                     android:id="@+id/etProgrammerValue"
+                    android:fontFamily="monospace"
+                    android:importantForAutofill="no"
                     android:layout_width="match_parent"
                     android:layout_height="110dp"
                     android:layout_marginTop="9dp"
@@ -239,24 +245,24 @@
                     android:textSize="15sp"
                     android:padding="15dp"
                     android:gravity="top|start"
-                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:inputType="textMultiLine"
                     android:minLines="2"
                     android:maxLines="4"
-                    android:scrollbars="vertical"
-                    android:importantForAutofill="no"/>
+                    android:scrollbars="vertical"/>
 
                 <!-- BOTON -->
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnProgrammerConvert"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
-                    android:layout_marginTop="20dp"
                     android:backgroundTint="@null"
-                    android:background="@drawable/bg_button_blue"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_button"
                     android:text="CONVERTIR   →"
-                    android:textColor="#080D18"
-                    android:textSize="13sp"
+                    android:textColor="#FFFFFF"
+                    android:textAllCaps="false"
                     android:textStyle="bold"
+                    android:textSize="13sp"
                     android:letterSpacing="0.06"
                     android:stateListAnimator="@null"/>
 
@@ -294,6 +300,7 @@
 
                     <TextView
                         android:id="@+id/tvProgrammerResult"
+                        android:fontFamily="monospace"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -302,8 +309,7 @@
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textIsSelectable="true"
-                        android:breakStrategy="simple"
-                        android:paddingBottom="4dp"/>
+                        android:breakStrategy="simple"/>
 
                 </LinearLayout>
 

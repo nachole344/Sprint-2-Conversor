@@ -213,6 +213,8 @@
 
                 <Spinner
                     android:id="@+id/spFractionOperation"
+                    android:popupBackground="#111B2D"
+                    android:spinnerMode="dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:background="@drawable/bg_input"
@@ -236,6 +238,7 @@
 
                 <TextView
                     android:id="@+id/tvFractionResult"
+                    android:textIsSelectable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -315,6 +318,7 @@
 
                 <TextView
                     android:id="@+id/tvPercentageResult"
+                    android:textIsSelectable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -379,6 +383,7 @@
 
                 <TextView
                     android:id="@+id/tvRootResult"
+                    android:textIsSelectable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -458,6 +463,7 @@
 
                 <TextView
                     android:id="@+id/tvPowerResult"
+                    android:textIsSelectable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -508,6 +514,8 @@
 
                 <Spinner
                     android:id="@+id/spAngleDirection"
+                    android:popupBackground="#111B2D"
+                    android:spinnerMode="dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_marginTop="10dp"
@@ -532,6 +540,7 @@
 
                 <TextView
                     android:id="@+id/tvAngleResult"
+                    android:textIsSelectable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
