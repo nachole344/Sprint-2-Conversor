@@ -2,6 +2,63 @@ package com.example.sprint2conversor.logic;
 
 public class Conversor {
 
+    /** Devuelve si esta categoria se convierte con los enums de este conversor. */
+    public boolean soportaCategoria(String categoria) {
+        if (categoria == null) return false;
+        switch (Categories.normalize(categoria)) {
+            case "longitud":
+            case "velocidad":
+            case "tiempo":
+            case "datos":
+            case "energia":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /** Unidades visibles para las categorias implementadas mediante enums. */
+    public String[] obtenerUnidades(String categoria) {
+        switch (Categories.normalize(categoria)) {
+            case "longitud": return abreviaciones(lengthUnits.values());
+            case "velocidad": return abreviaciones(speedUnits.values());
+            case "tiempo": return abreviaciones(timeUnits.values());
+            case "datos": return abreviaciones(storageUnits.values());
+            case "energia": return abreviaciones(energyUnits.values());
+            default: throw new IllegalArgumentException("Categoría no reconocida: " + categoria);
+        }
+    }
+
+    /** Convierte desde los nombres mostrados en los desplegables. */
+    public double convertir(String categoria, double valor, String origen, String destino) {
+        switch (Categories.normalize(categoria)) {
+            case "longitud":
+                return convertirLongitud(valor, lengthUnits.getUnit(origen), lengthUnits.getUnit(destino));
+            case "velocidad":
+                return convertirVelocidad(valor, speedUnits.getUnit(origen), speedUnits.getUnit(destino));
+            case "tiempo":
+                return convertirTiempo(valor, timeUnits.getUnit(origen), timeUnits.getUnit(destino));
+            case "datos":
+                return convertirAlmacenamiento(valor, storageUnits.getUnit(origen), storageUnits.getUnit(destino));
+            case "energia":
+                return convertirEnergia(valor, energyUnits.getUnit(origen), energyUnits.getUnit(destino));
+            default: throw new IllegalArgumentException("Categoría no reconocida: " + categoria);
+        }
+    }
+
+    private static String[] abreviaciones(Enum<?>[] unidades) {
+        String[] resultado = new String[unidades.length];
+        for (int i = 0; i < unidades.length; i++) {
+            Enum<?> unidad = unidades[i];
+            if (unidad instanceof lengthUnits) resultado[i] = ((lengthUnits) unidad).getAbreviacion();
+            else if (unidad instanceof speedUnits) resultado[i] = ((speedUnits) unidad).getAbreviacion();
+            else if (unidad instanceof timeUnits) resultado[i] = ((timeUnits) unidad).getAbreviacion();
+            else if (unidad instanceof storageUnits) resultado[i] = ((storageUnits) unidad).getAbreviacion();
+            else if (unidad instanceof energyUnits) resultado[i] = ((energyUnits) unidad).getAbreviacion();
+        }
+        return resultado;
+    }
+
     // ==============================
     //      CONVERSIONES SIMPLES
     // ==============================

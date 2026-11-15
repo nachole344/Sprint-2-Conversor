@@ -2,7 +2,7 @@ package com.example.sprint2conversor.logic;
 
 public enum energyUnits {
     JULIO("J", 1, true),
-    KILOVATIO_HORA("kV/h", 3600000, true),
+    KILOVATIO_HORA("kWh", 3600000, true),
     CALORIA("cal", 4.184, true),
     KILOCALORIA("kcal", 4184, true),
     ELECTRONVOLTIO("eV", 1.602 * Math.pow(10, -19), true),

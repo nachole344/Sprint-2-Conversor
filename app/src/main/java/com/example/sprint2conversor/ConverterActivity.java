@@ -24,6 +24,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.sprint2conversor.logic.Categories;
+import com.example.sprint2conversor.logic.Conversor;
 import com.example.sprint2conversor.logic.MathConverter;
 import com.example.sprint2conversor.logic.ProgrammerConverter;
 import com.google.android.material.snackbar.Snackbar;
@@ -62,6 +63,8 @@ public class ConverterActivity extends AppCompatActivity {
     // categoria actual del conversor (null si la clave no existe)
     // categoria que se esta usando (tiene el titulo, las unidades y el conversor)
     private Categories.Category currentCategory;
+    private final Conversor enumConversor = new Conversor();
+    private String currentCategoryKey;
 
     // id de la vista raiz de la pantalla actual (para snackbar e insets)
     // id de la vista raiz de cada pantalla, lo uso pa el snackbar y pa los insets
@@ -411,11 +414,13 @@ public class ConverterActivity extends AppCompatActivity {
     // busca la categoria en categories y rellena titulo, subtitulo y spinners
     private void configureCategory(String key) {
 
+        currentCategoryKey = key;
+
         // find devuelve null si la clave no existe
         currentCategory = Categories.find(key);
 
         // categoria desconocida: avisamos y salimos
-        if (currentCategory == null) {
+        if (currentCategory == null && !enumConversor.soportaCategoria(key)) {
             tvTitulo.setText("Categoría no disponible");
             tvSubtitulo.setText("Esta categoría todavía no está implementada");
 
@@ -424,12 +429,17 @@ public class ConverterActivity extends AppCompatActivity {
         }
 
         // ponemos el titulo y el subtitulo de la categoria
-        tvTitulo.setText(currentCategory.title);
-        tvSubtitulo.setText(currentCategory.subtitle);
+        if (currentCategory != null) {
+            tvTitulo.setText(currentCategory.title);
+            tvSubtitulo.setText(currentCategory.subtitle);
+        } else {
+            tvTitulo.setText("Conversor de " + key.toLowerCase(Locale.ROOT));
+            tvSubtitulo.setText("Convierte entre las unidades disponibles");
+        }
 
         // nota opcional (por ejemplo, aviso de tasas de ejemplo en monedas)
         // setvisibility: visible = se ve, gone = no se ve ni ocupa espacio
-        if (currentCategory.note != null) {
+        if (currentCategory != null && currentCategory.note != null) {
             tvNota.setText(currentCategory.note);
             tvNota.setVisibility(View.VISIBLE);
         } else {
@@ -437,7 +447,9 @@ public class ConverterActivity extends AppCompatActivity {
         }
 
         // las unidades salen del unitconverter de la categoria, asi no las escribo aqui a mano
-        String[] options = currentCategory.converter.getUnits();
+        String[] options = enumConversor.soportaCategoria(key)
+                ? enumConversor.obtenerUnidades(key)
+                : currentCategory.converter.getUnits();
 
         // crear adaptador personalizado
         // los dos spinners comparten el mismo adaptador
@@ -463,7 +475,7 @@ public class ConverterActivity extends AppCompatActivity {
     private void calculate(boolean userAction) {
 
         // si no hay categoria no se puede convertir
-        if (currentCategory == null) {
+        if (currentCategory == null && !enumConversor.soportaCategoria(currentCategoryKey)) {
             if (userAction) {
                 showMessage("Categoría no disponible");
             }
@@ -496,7 +508,7 @@ public class ConverterActivity extends AppCompatActivity {
 
             // solo la temperatura admite valores negativos
             // validacion: los negativos solo valen en temperatura
-            if (value < 0 && !currentCategory.allowNegative) {
+            if (value < 0 && (currentCategory == null || !currentCategory.allowNegative)) {
                 if (userAction) {
                     showMessage("Este conversor no admite valores negativos");
                 }
@@ -509,7 +521,9 @@ public class ConverterActivity extends AppCompatActivity {
 
             // la misma llamada sirve para cualquier categoria
             // esta linea hace toda la conversion y vale pa cualquier categoria (la formula esta en unitconverter)
-            double result = currentCategory.converter.convert(value, from, to);
+            double result = enumConversor.soportaCategoria(currentCategoryKey)
+                    ? enumConversor.convertir(currentCategoryKey, value, from, to)
+                    : currentCategory.converter.convert(value, from, to);
 
             if (!Double.isFinite(result)) {
                 if (userAction) {

@@ -250,13 +250,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="↔"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_length"
                     android:textSize="26sp"/>
 
                 <TextView
@@ -295,13 +294,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="◈"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_weight"
                     android:textSize="25sp"/>
 
                 <TextView
@@ -340,13 +338,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="°"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_temperature"
                     android:textSize="29sp"/>
 
                 <TextView
@@ -385,13 +382,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="⌁"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_speed"
                     android:textSize="27sp"/>
 
                 <TextView
@@ -430,12 +426,11 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
-                    android:gravity="center"
-                    android:text="◉"
+                    android:src="@drawable/ic_volume"
                     android:textColor="#60A5FA"
                     android:textSize="25sp"/>
 
@@ -475,13 +470,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="√"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_math"
                     android:textSize="28sp"
                     android:textStyle="bold"/>
 
@@ -521,13 +515,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="€"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_currency"
                     android:textSize="27sp"
                     android:textStyle="bold"/>
 
@@ -566,13 +559,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="&lt; / &gt;"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_programmer"
                     android:textSize="27sp"
                     android:textStyle="bold"/>
 
@@ -611,13 +603,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="◔"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_time"
                     android:textSize="26sp"
                     android:textStyle="bold"/>
 
@@ -656,13 +647,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="01"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_digital"
                     android:textSize="22sp"
                     android:textStyle="bold"/>
 
@@ -701,13 +691,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="▦"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_area"
                     android:textSize="24sp"
                     android:textStyle="bold"/>
 
@@ -746,13 +735,12 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bg_input"
                     android:gravity="center"
-                    android:text="⊙"
-                    android:textColor="#60A5FA"
+                    android:src="@drawable/ic_pressure"
                     android:textSize="26sp"
                     android:textStyle="bold"/>
 
@@ -770,6 +758,50 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Bar y pascales"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <!-- ENERGÍA -->
+
+            <LinearLayout
+                android:id="@+id/catEnergy"
+                android:layout_width="0dp"
+                android:layout_height="145dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="7dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="17dp">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center"
+                    android:src="@drawable/ic_energy"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:text="Energia"
+                    android:textColor="#F1F5F9"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Julios, calorias..."
                     android:textColor="#64748B"
                     android:textSize="12sp"/>
 

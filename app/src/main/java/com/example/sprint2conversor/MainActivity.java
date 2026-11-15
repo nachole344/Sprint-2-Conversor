@@ -83,7 +83,9 @@ public class MainActivity extends AppCompatActivity {
             new CategoryItem(R.id.catArea, Categories.AREA, "Área",
                     "m², hectáreas, acres, km²...", R.drawable.img_cat_area),
             new CategoryItem(R.id.catPressure, Categories.PRESSURE, "Presión",
-                    "Pascales, bar, atmósferas, psi...", R.drawable.img_cat_pressure)
+                    "Pascales, bar, atmósferas, psi...", R.drawable.img_cat_pressure),
+            new CategoryItem(R.id.catEnergy, Categories.ENERGY, "Energía",
+                    "Joules, kilovatios, kilocalorías, kcal...", R.drawable.img_cat_energy)
     };
 
     // referencias a las vistas del layout (se enlazan en oncreate)
