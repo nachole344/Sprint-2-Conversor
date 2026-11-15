@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootProgrammer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#080D18">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="30dp">
+
+            <!-- NAVEGACION -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBackProgrammer"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_input"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:text="←  Volver"
+                android:textAllCaps="false"
+                android:textColor="#60A5FA"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp" />
+
+            <!-- CABECERA -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VERTEX / TOOLS"
+                    android:textColor="#60A5FA"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.18"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Programación"
+                    android:textColor="#F8FAFC"
+                    android:textSize="32sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Conversor de bases y codificación"
+                    android:textColor="#94A3B8"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:layout_width="42dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="17dp"
+                    android:background="#60A5FA"/>
+
+            </LinearLayout>
+
+            <!-- TARJETA CONVERSOR -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/bg_card">
+
+                <!-- CABECERA TARJETA -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="CONVERSIÓN"
+                        android:textColor="#F8FAFC"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.08"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="DEV TOOLS"
+                        android:textColor="#60A5FA"
+                        android:textSize="9sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/bg_input"/>
+
+                </LinearLayout>
+
+                <!-- TIPO CONVERSION -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="TIPO DE CONVERSIÓN"
+                    android:textColor="#94A3B8"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08"/>
+
+                <Spinner
+                    android:id="@+id/spProgrammerMode"
+                    android:popupBackground="#111B2D"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/bg_input"
+                    android:paddingStart="13dp"
+                    android:paddingEnd="13dp"
+                    android:spinnerMode="dropdown"/>
+
+                <!-- BASES PERSONALIZADAS -->
+                <LinearLayout
+                    android:id="@+id/layoutCustomBases"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="7dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BASE ORIGEN"
+                            android:letterSpacing="0.08"
+                            android:textColor="#94A3B8"
+                            android:textSize="10sp"
+                            android:textStyle="bold"/>
+
+                        <Spinner
+                            android:id="@+id/spBaseFrom"
+                            android:popupBackground="#111B2D"
+                            android:spinnerMode="dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_input"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="7dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BASE DESTINO"
+                            android:letterSpacing="0.08"
+                            android:textColor="#94A3B8"
+                            android:textSize="10sp"
+                            android:textStyle="bold"/>
+
+                        <Spinner
+                            android:id="@+id/spBaseTo"
+                            android:popupBackground="#111B2D"
+                            android:spinnerMode="dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_input"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- DIVISOR -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="23dp"
+                    android:background="#253044"/>
+
+                <!-- ENTRADA -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="ENTRADA"
+                    android:textColor="#94A3B8"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08"/>
+
+                <EditText
+                    android:id="@+id/etProgrammerValue"
+                    android:fontFamily="monospace"
+                    android:importantForAutofill="no"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/bg_input"
+                    android:hint="Introduce un número o texto..."
+                    android:textColor="#F8FAFC"
+                    android:textColorHint="#64748B"
+                    android:textSize="15sp"
+                    android:padding="15dp"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:maxLines="4"
+                    android:scrollbars="vertical"/>
+
+                <!-- BOTON -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnProgrammerConvert"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:backgroundTint="@null"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_button"
+                    android:text="CONVERTIR   →"
+                    android:textColor="#FFFFFF"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:letterSpacing="0.06"
+                    android:stateListAnimator="@null"/>
+
+                <!-- RESULTADO -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="@drawable/bg_input">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            android:background="#60A5FA"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="9dp"
+                            android:text="RESULTADO"
+                            android:textColor="#94A3B8"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.1"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvProgrammerResult"
+                        android:fontFamily="monospace"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="El resultado aparecerá aquí"
+                        android:textColor="#60A5FA"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textIsSelectable="true"
+                        android:breakStrategy="simple"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- PIE -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:gravity="center"
+                android:text="NUMBER SYSTEMS  /  ASCII  /  HEX"
+                android:textColor="#475569"
+                android:textSize="10sp"
+                android:letterSpacing="0.12"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
