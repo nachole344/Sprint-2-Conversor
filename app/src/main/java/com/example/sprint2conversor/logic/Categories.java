@@ -24,6 +24,7 @@ public final class Categories {
     public static final String DIGITAL = "Datos";
     public static final String AREA = "Area";
     public static final String PRESSURE = "Presion";
+    public static final String ENERGY = "Energia";
 
     // pantallas especiales (no usan unitconverter)
     // matematicas y programacion no usan unitconverter, tienen su propia pantalla
@@ -227,6 +228,18 @@ public final class Categories {
                                 // 1 social = 10 cny  ->  1 eur = 0,747 social
                                 .add("Social Credit (SOCIAL)", 1 / (7.47 / 10.0))),
                 "moneda");
+        // energias (base: julio)
+        register(new Category(ENERGY,
+                        "Conversor de energia",
+                        "Convierte entre diferentes unidades de energia",
+                        null, false,
+                        new UnitConverter()
+                                .add("J", 1.0)
+                                .add("kWh", 3600000.0)
+                                .add("cal", 4.184)
+                                .add("kcal", 4184.0)
+                                .add("eV", 1.602 * Math.pow(10, -19))
+                                .add("BTU", 1055.05)));
     }
 
     // constructor privado: nadie puede hacer new categories(), solo se usan sus metodos estaticos
